@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketAddress;
-import java.net.SocketException;
 import java.sql.SQLException;
 
 public class PhysicalConnection {
@@ -41,4 +40,12 @@ public class PhysicalConnection {
             throw  new SQLException(e.getMessage(),e);
         }
     }
+
+
+    public SocketAddress address() {
+        return  address;
+    }
+
+
+
 }

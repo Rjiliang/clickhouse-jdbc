@@ -4,10 +4,13 @@ import com.cherry.jdbc.connect.ClientInfo;
 import com.cherry.jdbc.connect.PhysicalConnection;
 import com.cherry.jdbc.connect.PhysicalInfo;
 import com.cherry.jdbc.connect.ServerInfo;
+import com.cherry.jdbc.misc.Validate;
 import com.cherry.jdbc.settings.ClickHouseConfig;
+import com.cherry.jdbc.settings.ClickHouseDefines;
 import com.cherry.jdbc.wrapper.SQLConnection;
 import com.sun.security.ntlm.Client;
 
+import java.net.InetSocketAddress;
 import java.sql.SQLException;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
@@ -34,13 +37,18 @@ public class ClickHouseConnection extends SQLConnection {
         return  new PhysicalInfo(createClientInfo(physicalConnection,config),createServerInfo(physicalConnection,config),physicalConnection);
     }
 
-    private static ClientInfo createClientInfo(PhysicalConnection connection, ClickHouseConfig config) {
-        //TODO
-        return  null;
+    private static ClientInfo createClientInfo(PhysicalConnection connection, ClickHouseConfig config) throws SQLException {
+        Validate.isTrue(connection.address() instanceof InetSocketAddress);
+        InetSocketAddress address = (InetSocketAddress) connection.address();
+        String clientName = String.format("%s %s",ClickHouseDefines.NAME,"client");
+        String initialAddress = "[::ffff:127.0.0.1]:0";
+        return  new ClientInfo(clientName,address.getHostName(),initialAddress);
     }
 
     private static ServerInfo createServerInfo(PhysicalConnection connection,ClickHouseConfig config) {
         //TODO
+        long reversion = ClickHouseDefines.CLIENT_REVERSION;
+
         return  null;
     }
 
