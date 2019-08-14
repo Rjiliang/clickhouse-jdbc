@@ -39,6 +39,10 @@ public class BinarySerializer {
         }
     }
 
+    public void flushToTarget(boolean force) throws IOException {
+        container.get().flushToTarget(force);
+    }
+
     public static void main(String[] args){
         String str = "test serializer";
         byte[] bytes = str.getBytes();

@@ -1,5 +1,6 @@
 package com.cherry.jdbc.connect;
 
+import com.cherry.jdbc.protocol.HelloRequest;
 import com.cherry.jdbc.serializer.BinaryDeserializer;
 import com.cherry.jdbc.serializer.BinarySerializer;
 import com.cherry.jdbc.settings.ClickHouseConfig;
@@ -46,6 +47,18 @@ public class PhysicalConnection {
         return  address;
     }
 
+    public void sendHello(String client, long reversion, String db, String user, String password) throws SQLException {
+        sendRequest(new HelloRequest(client,reversion,db,user,password));
+    }
+
+    private void sendRequest(HelloRequest helloRequest) throws SQLException {
+        try {
+            helloRequest.writeTo(serializer);
+            serializer.flushToTarget(true);
+        } catch (IOException e) {
+            throw new SQLException(e.getMessage(),e);
+        }
+    }
 
 
 }
