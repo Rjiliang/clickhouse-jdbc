@@ -47,9 +47,14 @@ public class ClickHouseConnection extends SQLConnection {
 
     private static ServerInfo createServerInfo(PhysicalConnection connection,ClickHouseConfig config) {
         //TODO
-        long reversion = ClickHouseDefines.CLIENT_REVERSION;
-
+        try {
+            long reversion = ClickHouseDefines.CLIENT_REVERSION;
+            connection.sendHello("client",reversion,config.getDatabase(),config.getUsername(),config.getPassword());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return  null;
     }
+
 
 }

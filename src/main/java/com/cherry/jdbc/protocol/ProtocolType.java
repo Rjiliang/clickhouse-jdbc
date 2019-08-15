@@ -1,7 +1,10 @@
 package com.cherry.jdbc.protocol;
 
 public enum ProtocolType {
-    REQUEST_HELLO(0);
+    REQUEST_HELLO(0),
+
+
+    RESPONSE_HELLO(0);
 
     private final int id;
 

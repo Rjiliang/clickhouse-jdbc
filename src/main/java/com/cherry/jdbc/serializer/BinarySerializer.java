@@ -23,7 +23,7 @@ public class BinarySerializer {
         writeVarInt(bytes.length);
     }
 
-    private void writeVarInt(long x) throws IOException {
+    public void writeVarInt(long x) throws IOException {
         for (int i = 0; i < 9; i++) {
             byte byt = (byte)(x & 0x7F);
 
